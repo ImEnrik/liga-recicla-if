@@ -1,7 +1,8 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { ItemReciclavel, ResumoSemanal } from './models';
-
+export type Faixa = 'todos' | 'ate8' | 'mais8';
 @Injectable({ providedIn: 'root' })
+
 export class ReciclagemService {
   // ---------- estado ----------
   private readonly _itens = signal<ItemReciclavel[]>([
@@ -22,9 +23,15 @@ export class ReciclagemService {
 
   /** Filtro: busca por nome, sem diferenciar acento ou maiúscula. */
   readonly itensFiltrados = computed(() => {
-    const termo = this.normalizar(this._busca());
-    return this._itens().filter((i) => this.normalizar(i.nome).includes(termo));
+  const termo = this.normalizar(this._busca());
+  const faixa = this._faixa();
+  return this._itens().filter((i) => {
+    const nomeOk = this.normalizar(i.nome).includes(termo);
+    const faixaOk =
+      faixa === 'todos' || (faixa === 'ate8' ? i.pontos <= 8 : i.pontos > 8);
+    return nomeOk && faixaOk;
   });
+});
 
   /** Total de pontos da seleção atual. */
   readonly pontosSelecionado = computed(() => this._selecionado()?.pontos ?? 0);
@@ -68,4 +75,16 @@ export class ReciclagemService {
   private normalizar(texto: string) {
     return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
   }
+
+private readonly _faixa = signal<Faixa>('todos');
+readonly faixa = this._faixa.asReadonly();
+definirFaixa(f: Faixa) {
+  this._faixa.set(f);
+}
+
+limparFiltros() {
+  this._busca.set('');
+  this._faixa.set('todos');
+}
+
 }

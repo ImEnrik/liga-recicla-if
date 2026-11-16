@@ -1,9 +1,7 @@
-<ion-item button detail="false" (click)="clicar()" [color]="selecionado ? 'light' : ''">
-  <ion-label>
-    <h2>{{ item.nome }}</h2>
-    <p>+{{ item.pontos }} pts</p>
-  </ion-label>
-  <ion-button slot="end" size="small" fill="clear">
-    {{ selecionado ? '✓' : '+' }}
-  </ion-button>
-</ion-item>
+<div class="card" [class.ativo]="selecionado" (click)="clicar()">
+  <div class="info">
+    <strong>{{ item.nome }}</strong>
+    <span>+{{ item.pontos }} pts</span>
+  </div>
+  <span class="badge">{{ selecionado ? '✓' : '+' }}</span>
+</div>

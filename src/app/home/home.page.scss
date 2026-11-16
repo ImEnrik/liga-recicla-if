@@ -25,3 +25,12 @@
 #container a {
   text-decoration: none;
 }
+.chips {
+  margin: 4px 0 12px;
+}
+.vazio {
+  text-align: center;
+  padding: 24px 8px;
+  color: #64748b;
+  .emoji { font-size: 36px; }
+}

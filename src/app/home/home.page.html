@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="success">
+  <ion-toolbar>
     <ion-title>Recicla IF</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="sair()">sair</ion-button>
@@ -9,20 +9,37 @@
 
 <ion-content class="ion-padding">
   <ion-searchbar
-    placeholder="Buscar item"
+    placeholder="Buscar: PET, latinhas..."
     [value]="svc.busca()"
     (ionInput)="svc.filtrar($any($event).target.value)"
   ></ion-searchbar>
 
-  <ion-list>
-    @for (item of svc.itensFiltrados(); track item.id) {
-      <app-item-card
-        [item]="item"
-        [selecionado]="svc.estaSelecionado(item)"
-        (escolher)="aoEscolher($event)"
-      ></app-item-card>
-    }
-  </ion-list>
+  <div class="chips">
+    <ion-chip
+      *ngFor="let f of faixas"
+      [outline]="svc.faixa() !== f.valor"
+      (click)="svc.definirFaixa(f.valor)"
+    >
+      <ion-label>{{ f.rotulo }}</ion-label>
+    </ion-chip>
+  </div>
 
-  <ion-button expand="block" color="success" (click)="continuar()">Continuar</ion-button>
+  <app-item-card
+    *ngFor="let item of svc.itensFiltrados(); trackBy: trackById"
+    [item]="item"
+    [selecionado]="svc.estaSelecionado(item)"
+    (escolher)="aoEscolher($event)"
+  ></app-item-card>
+
+  <div class="vazio" *ngIf="svc.itensFiltrados().length === 0">
+    <div class="emoji">♻️</div>
+    <p>Nenhum material encontrado para esse filtro.</p>
+    <ion-button size="small" fill="outline" (click)="svc.limparFiltros()">
+      Limpar filtros
+    </ion-button>
+  </div>
+
+  <ion-button expand="block" (click)="continuar()" [disabled]="!svc.selecionado()">
+    Continuar
+  </ion-button>
 </ion-content>
