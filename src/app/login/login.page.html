@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-title>Liga Recicla IF</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-segment [(ngModel)]="modo">
+    <ion-segment-button value="login"><ion-label>Entrar</ion-label></ion-segment-button>
+    <ion-segment-button value="cadastro"><ion-label>Cadastrar</ion-label></ion-segment-button>
+  </ion-segment>
+
+  <ion-item>
+    <ion-input label="E-mail" labelPlacement="floating" type="email" [(ngModel)]="email"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input label="Senha" labelPlacement="floating" type="password" [(ngModel)]="senha"></ion-input>
+  </ion-item>
+
+  <ion-button expand="block" class="ion-margin-top" (click)="enviar()" [disabled]="carregando">
+    {{ modo === 'login' ? 'Entrar' : 'Criar conta' }}
+  </ion-button>
+
+  <ion-button expand="block" fill="outline" (click)="google()">
+    Entrar com Google
+  </ion-button>
+</ion-content>
