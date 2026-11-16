@@ -1,0 +1,7 @@
+{
+  "name": "recicla-if",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
