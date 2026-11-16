@@ -1,1 +1,2 @@
-export * from './item-reciclagem.model';
+export * from './item-reciclavel.model';
+export * from './resumo-semanal.model';

@@ -1,18 +1,24 @@
 <ion-header>
   <ion-toolbar color="success">
-    <ion-title>Liga Recicla IF</ion-title>
+    <ion-title>Recicla IF</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="sair()">sair</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <ion-list>
     @for (item of itens; track item.id) {
-      <ion-item>
+      <ion-item button detail="false" (click)="escolher(item)" [color]="ativo(item) ? 'light' : ''">
         <ion-label>
           <h2>{{ item.nome }}</h2>
-          <p>{{ item.tipo }} · {{ item.quantidade }} un · {{ item.pontos }} pts</p>
+          <p>+{{ item.pontos }} pts</p>
         </ion-label>
+        <ion-button slot="end" size="small" fill="clear">{{ ativo(item) ? '✓' : '+' }}</ion-button>
       </ion-item>
     }
   </ion-list>
+
+  <ion-button expand="block" color="success" (click)="continuar()">Continuar</ion-button>
 </ion-content>

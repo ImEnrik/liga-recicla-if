@@ -1,15 +1,38 @@
 import { Injectable } from '@angular/core';
-import { ItemReciclagem } from './models';
+import { ItemReciclavel, ResumoSemanal } from './models';
 
 @Injectable({ providedIn: 'root' })
 export class ReciclagemService {
-  private itens: ItemReciclagem[] = [
-    { id: '1', nome: 'Garrafas PET', tipo: 'plastico', quantidade: 12, pontos: 24, data: '2026-11-10' },
-    { id: '2', nome: 'Caixas de papelão', tipo: 'papel', quantidade: 5, pontos: 10, data: '2026-11-11' },
-    { id: '3', nome: 'Latas de alumínio', tipo: 'metal', quantidade: 20, pontos: 40, data: '2026-11-12' },
+  private itens: ItemReciclavel[] = [
+    { id: '1', nome: 'Garrafas PET', pontos: 10 },
+    { id: '2', nome: 'Papel/papelão', pontos: 5 },
+    { id: '3', nome: 'Latinhas', pontos: 8 },
+    { id: '4', nome: 'Eletrônicos', pontos: 20 },
+    { id: '5', nome: 'Orgânico', pontos: 3 },
   ];
 
-  listar(): ItemReciclagem[] {
+  private resumo: ResumoSemanal = { pontosSemana: 18, metaSemanal: 30 };
+
+  selecionado: ItemReciclavel | null = null;
+
+  listar(): ItemReciclavel[] {
     return this.itens;
+  }
+
+  obterResumo(): ResumoSemanal {
+    return this.resumo;
+  }
+
+  selecionar(item: ItemReciclavel) {
+    this.selecionado = item;
+  }
+
+  registrarEntrega() {
+    if (!this.selecionado) return;
+    this.resumo = {
+      ...this.resumo,
+      pontosSemana: this.resumo.pontosSemana + this.selecionado.pontos,
+    };
+    this.selecionado = null;
   }
 }
