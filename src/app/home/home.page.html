@@ -16,16 +16,11 @@
 
   <ion-list>
     @for (item of svc.itensFiltrados(); track item.id) {
-      <ion-item button detail="false" (click)="svc.selecionar(item)"
-                [color]="svc.estaSelecionado(item) ? 'light' : ''">
-        <ion-label>
-          <h2>{{ item.nome }}</h2>
-          <p>+{{ item.pontos }} pts</p>
-        </ion-label>
-        <ion-button slot="end" size="small" fill="clear">
-          {{ svc.estaSelecionado(item) ? '✓' : '+' }}
-        </ion-button>
-      </ion-item>
+      <app-item-card
+        [item]="item"
+        [selecionado]="svc.estaSelecionado(item)"
+        (escolher)="aoEscolher($event)"
+      ></app-item-card>
     }
   </ion-list>
 

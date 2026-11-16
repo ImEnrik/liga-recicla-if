@@ -2,10 +2,12 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonContent,
-  IonList, IonItem, IonLabel, IonSearchbar,
+  IonList, IonSearchbar,
 } from '@ionic/angular';
 import { ReciclagemService } from '../reciclagem.service';
 import { AuthService } from '../auth.service';
+import { ItemCardComponent } from '../components/item-card/item-card.component';
+import { ItemReciclavel } from '../models';
 
 @Component({
   selector: 'app-home',
@@ -13,13 +15,17 @@ import { AuthService } from '../auth.service';
   standalone: true,
   imports: [
     IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonContent,
-    IonList, IonItem, IonLabel, IonSearchbar,
+    IonList, IonSearchbar, ItemCardComponent,
   ],
 })
 export class HomePage {
   readonly svc = inject(ReciclagemService);
   private auth = inject(AuthService);
   private router = inject(Router);
+
+  aoEscolher(item: ItemReciclavel) {
+    this.svc.selecionar(item);
+  }
 
   continuar() {
     if (this.svc.selecionado()) this.router.navigateByUrl('/resumo');

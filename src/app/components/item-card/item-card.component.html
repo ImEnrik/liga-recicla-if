@@ -1,0 +1,9 @@
+<ion-item button detail="false" (click)="clicar()" [color]="selecionado ? 'light' : ''">
+  <ion-label>
+    <h2>{{ item.nome }}</h2>
+    <p>+{{ item.pontos }} pts</p>
+  </ion-label>
+  <ion-button slot="end" size="small" fill="clear">
+    {{ selecionado ? '✓' : '+' }}
+  </ion-button>
+</ion-item>
