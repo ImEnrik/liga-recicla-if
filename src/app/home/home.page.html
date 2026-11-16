@@ -8,14 +8,23 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <ion-searchbar
+    placeholder="Buscar item"
+    [value]="svc.busca()"
+    (ionInput)="svc.filtrar($any($event).target.value)"
+  ></ion-searchbar>
+
   <ion-list>
-    @for (item of itens; track item.id) {
-      <ion-item button detail="false" (click)="escolher(item)" [color]="ativo(item) ? 'light' : ''">
+    @for (item of svc.itensFiltrados(); track item.id) {
+      <ion-item button detail="false" (click)="svc.selecionar(item)"
+                [color]="svc.estaSelecionado(item) ? 'light' : ''">
         <ion-label>
           <h2>{{ item.nome }}</h2>
           <p>+{{ item.pontos }} pts</p>
         </ion-label>
-        <ion-button slot="end" size="small" fill="clear">{{ ativo(item) ? '✓' : '+' }}</ion-button>
+        <ion-button slot="end" size="small" fill="clear">
+          {{ svc.estaSelecionado(item) ? '✓' : '+' }}
+        </ion-button>
       </ion-item>
     }
   </ion-list>

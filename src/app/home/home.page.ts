@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonContent,
-  IonList, IonItem, IonLabel,
+  IonList, IonItem, IonLabel, IonSearchbar,
 } from '@ionic/angular';
-import { ItemReciclavel } from '../models';
 import { ReciclagemService } from '../reciclagem.service';
 import { AuthService } from '../auth.service';
 
@@ -14,32 +13,16 @@ import { AuthService } from '../auth.service';
   standalone: true,
   imports: [
     IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonContent,
-    IonList, IonItem, IonLabel,
+    IonList, IonItem, IonLabel, IonSearchbar,
   ],
 })
 export class HomePage {
-  itens: ItemReciclavel[] = [];
-
-  constructor(
-    private service: ReciclagemService,
-    private auth: AuthService,
-    private router: Router,
-  ) {
-    this.itens = this.service.listar();
-  }
-
-  escolher(item: ItemReciclavel) {
-    this.service.selecionar(item);
-  }
-
-  ativo(item: ItemReciclavel) {
-    return this.service.selecionado?.id === item.id;
-  }
+  readonly svc = inject(ReciclagemService);
+  private auth = inject(AuthService);
+  private router = inject(Router);
 
   continuar() {
-    if (this.service.selecionado) {
-      this.router.navigateByUrl('/resumo');
-    }
+    if (this.svc.selecionado()) this.router.navigateByUrl('/resumo');
   }
 
   async sair() {

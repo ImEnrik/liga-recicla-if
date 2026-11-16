@@ -10,21 +10,21 @@
 <ion-content class="ion-padding">
   <ion-item lines="none">
     <ion-label>Pontos da semana</ion-label>
-    <ion-note slot="end">{{ resumo.pontosSemana }}</ion-note>
+    <ion-note slot="end">{{ svc.resumo().pontosSemana }}</ion-note>
   </ion-item>
   <ion-item lines="none">
     <ion-label><strong>Meta semanal</strong></ion-label>
-    <ion-note slot="end"><strong>{{ resumo.metaSemanal }}</strong></ion-note>
+    <ion-note slot="end"><strong>{{ svc.resumo().metaSemanal }}</strong></ion-note>
   </ion-item>
 
-  <ion-item lines="none" [color]="metaAtingida ? 'success' : 'danger'">
-    <ion-label>{{ metaAtingida ? 'Meta atingida!' : 'Meta ainda não atingida' }}</ion-label>
+  <ion-item lines="none" [color]="svc.metaAtingida() ? 'success' : 'danger'">
+    <ion-label>{{ svc.mensagemMeta() }}</ion-label>
   </ion-item>
 
-  @if (item) {
+  @if (svc.selecionado(); as item) {
     <ion-item>
       <ion-label>{{ item.nome }}</ion-label>
-      <ion-note slot="end">+{{ item.pontos }}</ion-note>
+      <ion-note slot="end">+{{ svc.pontosSelecionado() }}</ion-note>
     </ion-item>
   }
 
